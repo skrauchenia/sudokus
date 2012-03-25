@@ -1,8 +1,5 @@
 package com.sudokus.model;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * @author Siarhei Krauchenia
  *         Date: 3/14/12
@@ -75,8 +72,8 @@ public class Atom {
     }
 
     public String toString() {
-        //return String.format("Section: %s-%s|%s-%s :Atom", sectorX, sectorY, x, y) ;
-        return String.valueOf(value);
+        return String.format("%s%s|%s%s", sectorX, sectorY, x, y) ;
+//        return String.valueOf(value);
     }
 
     public boolean solved() {

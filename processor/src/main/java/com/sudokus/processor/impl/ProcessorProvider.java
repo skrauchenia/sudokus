@@ -14,7 +14,10 @@ public class ProcessorProvider {
         return Arrays.asList(new Processor[]{
                 new LinearColumnProcessor(),
                 new LinearRowsProcessor(),
-                new LinearSectorProcessor()
+                new LinearSectorProcessor(),
+                new SquaredColumnProcessor(),
+                new SquaredRowProcessor(),
+                new SquaredSectorProcessor()
         });
     }
 }

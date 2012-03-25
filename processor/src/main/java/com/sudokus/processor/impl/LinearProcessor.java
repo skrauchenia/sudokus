@@ -1,19 +1,16 @@
 package com.sudokus.processor.impl;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.sudokus.model.Atom;
 import com.sudokus.model.Sector;
 import com.sudokus.processor.ResolvedAtomsStorage;
-import org.apache.log4j.Logger;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author skrauchenia
  */
 abstract class LinearProcessor extends AbstractProcessor {
-
-    protected Logger log = Logger.getLogger(this.getClass());
 
     public void process(Sector[][] data) {
         int length = data.length;
@@ -21,7 +18,7 @@ abstract class LinearProcessor extends AbstractProcessor {
         for (int i = 0; i < (length); i++) {
             for (int j = 0; j < length; j++) {
                 Atom[] column = extractLine(data, i, j);
-                Map<Integer, List<Atom>> candidates = createPreFilledCandidateMap(length * length);
+                ArrayListMultimap<Integer, Atom> candidates = ArrayListMultimap.create();
                 for (int k = 0; k < length * length; k++) {
                     int numberCandidate = k + 1;
 
@@ -38,15 +35,19 @@ abstract class LinearProcessor extends AbstractProcessor {
                     }
                 }
 
-                for (Map.Entry<Integer, List<Atom>> entry : candidates.entrySet()) {
-                    List<Atom> value = entry.getValue();
-                    if(value.size() == 1) {
-                        Atom winner = value.get(0);
-                        log.info("Winner found: " + winner.coordinatePrettyPrint());
-                        winner.setValue(entry.getKey());
-                        ResolvedAtomsStorage.storage().add(winner);
-                    }
-                }
+                processCandidateLine(candidates);
+            }
+        }
+    }
+
+    protected void processCandidateLine(ArrayListMultimap<Integer, Atom> candidates) {
+        for (Integer key : candidates.keySet()) {
+            List<Atom> value = candidates.get(key);
+            if(value.size() == 1) {
+                Atom winner = value.get(0);
+                log.info("Winner found: " + winner.coordinatePrettyPrint());
+                winner.setValue(key);
+                ResolvedAtomsStorage.storage().add(winner);
             }
         }
     }
