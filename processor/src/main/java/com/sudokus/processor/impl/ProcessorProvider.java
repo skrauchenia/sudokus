@@ -12,12 +12,8 @@ public class ProcessorProvider {
 
     public static List<Processor> getProcessors() {
         return Arrays.asList(new Processor[]{
-                new LinearColumnProcessor(),
-                new LinearRowsProcessor(),
-                new LinearSectorProcessor(),
-                new SquaredColumnProcessor(),
-                new SquaredRowProcessor(),
-                new SquaredSectorProcessor()
+                new SingletonProcessor(),
+                new OpenPairsProcessor()
         });
     }
 }

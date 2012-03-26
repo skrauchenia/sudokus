@@ -12,39 +12,38 @@ import java.util.Map;
  * @author Siarhei Krauchenia
  *         Date: 3/25/12
  */
-abstract class SquaredProcessor extends LinearProcessor {
+class OpenPairsProcessor extends SingletonProcessor {
 
     @Override
-    public void process(Sector[][] data) {
-        int length = data.length;
+    protected List<ArrayListMultimap<Atom, Integer>> processDataOnAtomLevel(List<Atom[]> dataChunks) {
+        int length = dataChunks.size();
         List<ArrayListMultimap<Atom, Integer>> candidatesResult = Lists.newArrayList();
-        for (int i = 0; i < (length); i++) {
-            for (int j = 0; j < length; j++) {
-                Atom[] column = extractLine(data, i, j);
-                ArrayListMultimap<Atom, Integer> candidates = ArrayListMultimap.create();
-                for (int k = 0; k < length * length; k++) {
-                    int numberCandidate = k + 1;
+        for (Atom[] chunk : dataChunks) {
 
-                    for (int l = 0; l < length * length; l++) {
-                        Atom candidate = column[l];
-                        boolean present = candidate.solved(); // don't need to process this candidate if it already solved
-                        present = present || super.isNumberPresent(numberCandidate, candidate.getRow());
-                        present = present || super.isNumberPresent(numberCandidate, candidate.getColumn());
-                        present = present || super.isNumberPresent(numberCandidate, candidate.getSector().getAtoms());
+            ArrayListMultimap<Atom, Integer> candidates = ArrayListMultimap.create();
+            for (int k = 0; k < length; k++) {
+                int numberCandidate = k + 1;
 
-                        if (!present) {
-                            candidates.put(candidate, numberCandidate);
-                        }
+                for (int l = 0; l < length; l++) {
+                    Atom candidate = chunk[l];
+                    boolean present = candidate.solved(); // don't need to process this candidate if it already solved
+                    present = present || super.isNumberPresent(numberCandidate, candidate.getRow());
+                    present = present || super.isNumberPresent(numberCandidate, candidate.getColumn());
+                    present = present || super.isNumberPresent(numberCandidate, candidate.getSector().getAtoms());
+
+                    if (!present) {
+                        candidates.put(candidate, numberCandidate);
                     }
                 }
+            }
+            if (!candidates.isEmpty()) {
                 candidatesResult.add(candidates);
             }
         }
-
-        processCandidates(candidatesResult, data);
+        return candidatesResult;
     }
 
-    protected void processCandidates(List<ArrayListMultimap<Atom,Integer>> candidatesResult, Sector[][] data) {
+    protected void analyzeAtoms(List<ArrayListMultimap<Atom, Integer>> candidatesResult) {
         for (ArrayListMultimap<Atom, Integer> line : candidatesResult) {
             Multiset<List<Integer>> atomCandidates = HashMultiset.create();
             for (Atom key : line.keySet()) {
@@ -52,16 +51,16 @@ abstract class SquaredProcessor extends LinearProcessor {
             }
 
             for (List<Integer> candidates : atomCandidates) {
-                if(candidates.size() == atomCandidates.count(candidates)) {
+                if (candidates.size() == atomCandidates.count(candidates)) {
                     for (Atom atom : line.keySet()) {
                         List<Integer> integers = line.get(atom);
-                        if(integers.equals(candidates)) {
+                        if (integers.equals(candidates)) {
                             continue;
                         }
 
                         Iterator<Integer> iterator = integers.iterator();
                         while (iterator.hasNext()) {
-                            if(candidates.contains(iterator.next())) {
+                            if (candidates.contains(iterator.next())) {
                                 iterator.remove();
                             }
                         }
