@@ -20,5 +20,12 @@
             <artifactId>processor</artifactId>
             <version>0.9-BETA</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-swing</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

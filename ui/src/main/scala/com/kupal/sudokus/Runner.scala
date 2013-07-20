@@ -4,6 +4,8 @@ package com.kupal.sudokus
  *
  * @author skrauchenia
  */
-object Runner {
+object Runner extends App {
+
+  println("Hey!")
 
 }
