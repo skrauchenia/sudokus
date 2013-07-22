@@ -1,6 +1,6 @@
 package com.kupal.sudokus.process.model
 
-import org.scalatest.{FunSpec, GivenWhenThen, FeatureSpec}
+import org.scalatest.{FunSpec}
 
 /**
  * @author skrauchenia

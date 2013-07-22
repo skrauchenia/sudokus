@@ -12,7 +12,7 @@ object Runner {
     val config = ConfigFactory.load("data-sets")
     val patternValue = config.getString(args(0))
 
-    val resolver = new SudokuResolver(patternValue)
+    val resolver = new SudokuResolver(new SudokuGrid(patternValue))
     val grid: SudokuGrid = resolver.resolve()
 
     println(s"Result = \n${grid}")

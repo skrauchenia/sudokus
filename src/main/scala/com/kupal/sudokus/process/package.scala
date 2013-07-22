@@ -1,20 +1,22 @@
 package com.kupal.sudokus
 
+import com.kupal.sudokus.process.model.Atom
+
 /**
  * @author skrauchenia
  */
 package object process {
   /** Grid row */
-  type Row = List[Int]
+  type Row = Array[Atom]
 
   /** Grid column */
-  type Column = List[Int]
+  type Column = Array[Atom]
 
   /** Grid block */
-  type Block = List[List[Int]]
+  type Block = Array[Array[Atom]]
 
   /** sudoku field */
-  type Grid = List[Block]
+  type Grid = Array[Block]
 
   val sudokuGridBlockSize = 3
   val sudokuGridHeight = 9
