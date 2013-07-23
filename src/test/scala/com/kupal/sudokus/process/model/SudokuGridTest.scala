@@ -20,8 +20,8 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       "0 0 0 7 0 0 0 0 0"
 
   val firstRow = Array(Atom.create(1, 6), Atom.createEmpty(2), Atom.createEmpty(3), Atom.createEmpty(4), Atom.create(5, 7), Atom.createEmpty(6), Atom.createEmpty(7), Atom.create(8, 3), Atom.createEmpty(9))
-  val lastRow = Array(Atom.create(1, 0), Atom.createEmpty(2), Atom.createEmpty(3), Atom.create(4, 7), Atom.create(5, 0), Atom.createEmpty(6), Atom.createEmpty(7), Atom.create(8, 0), Atom.createEmpty(9))
-  val thirdRow = Array(Atom.create(1, 0), Atom.create(2, 3), Atom.create(3, 1), Atom.create(4, 9), Atom.create(5, 0), Atom.createEmpty(6), Atom.createEmpty(7), Atom.create(8, 0), Atom.createEmpty(9))
+  val lastRow = Array(Atom.create(73, 0), Atom.createEmpty(74), Atom.createEmpty(75), Atom.create(76, 7), Atom.create(77, 0), Atom.createEmpty(78), Atom.createEmpty(79), Atom.create(80, 0), Atom.createEmpty(81))
+  val thirdRow = Array(Atom.create(19, 0), Atom.create(20, 3), Atom.create(21, 1), Atom.create(22, 9), Atom.create(23, 0), Atom.createEmpty(24), Atom.createEmpty(25), Atom.create(26, 0), Atom.createEmpty(27))
 
   feature("Sudoku grid unresolved atoms") {
 
@@ -89,7 +89,7 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       When("Trying to get last row by first atom")
       val row = grid.getAtomRow(Atom.createEmpty(73))
       Then("Getting 0 0 0 7 0 0 0 0 0")
-      assert(row.sameElements(lastRow))
+      assert(row.deep == lastRow.deep)
     }
 
     scenario("Get last row 2") {
@@ -116,7 +116,7 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       When("Trying to get third row by third atom")
       val row = grid.getAtomRow(Atom.create(21, 1))
       Then("Getting 0 3 1 9 0 0 0 0 0")
-      assert(row.deep == lastRow.deep)
+      assert(row.deep == thirdRow.deep)
     }
   }
 
