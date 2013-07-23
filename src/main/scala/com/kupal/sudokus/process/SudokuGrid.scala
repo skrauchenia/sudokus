@@ -24,7 +24,11 @@ class SudokuGrid(val atoms: Array[Atom]) {
   def unresolvedSize = (for (atom <- atoms) yield if (atom.isResolved()) 0 else 1).sum
 
   def getAtomRow(atom: Atom): Row = {
-    Array()
+    val rowIndex = (atom.index - 1) / sudokuGridWidth
+    val first = rowIndex * sudokuGridWidth
+    val last = first + sudokuGridWidth
+
+    atoms.slice(first, last)
   }
 
   def getAtomColumn(atom: Atom): Column = {
