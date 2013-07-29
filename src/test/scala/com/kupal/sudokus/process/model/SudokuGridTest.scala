@@ -28,6 +28,10 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
   val lastColumn = Array(create(9, 0), create(18, 1), create(27, 0), create(36, 6), create(45, 0), create(54, 0), create(63, 0), create(72, 0), create(81, 0))
   val thirdColumn = Array(create(3, 0), create(12, 5), create(21, 1), create(30, 0), create(39, 4), create(48, 0), create(57, 0), create(66, 0), create(75, 0))
 
+  val firstBlock = Array(Array(create(1, 6), create(2, 0), create(3, 0)), Array(create(10, 0), create(11, 4), create(12, 5)), Array(create(19, 0), create(20, 3), create(21, 1)))
+  val lastBlock = Array(Array(create(61, 9), create(62, 0), create(63, 0)), Array(create(70, 0), create(71, 0), create(72, 0)), Array(create(79, 0), create(80, 0), create(81, 0)))
+  val middleBlock = Array(Array(create(31, 1), create(32, 0), create(33, 0)), Array(create(40, 0), create(41, 5), create(42, 0)), Array(create(49, 0), create(50, 0), create(51, 2)))
+
   feature("Sudoku grid unresolved atoms") {
 
     scenario("unresolvedSize invoked on resolved grid ") {
@@ -188,5 +192,86 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
     }
   }
 
-//  feature("Sudoku grid atom block")(pending)
+  feature("Sudoku grid atom block") {
+    scenario("Get first block 1") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get first block by first atom")
+      val block = grid.getAtomBlock(create(1, 6))
+      Then("Getting 6 0 0 0 4 5 0 3 1")
+      assert(block.deep == firstBlock.deep)
+    }
+
+    scenario("Get first block 2") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get first block by last atom in block")
+      val block = grid.getAtomBlock(create(21, 1))
+      Then("Getting 6 0 0 0 4 5 0 3 1")
+      assert(block.deep == firstBlock.deep)
+    }
+
+    scenario("Get first block 3") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get first block by middle atom in block")
+      val block = grid.getAtomBlock(create(11, 4))
+      Then("Getting 6 0 0 0 4 5 0 3 1")
+      assert(block.deep == firstBlock.deep)
+    }
+
+    scenario("Get last block 1") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get last block by first block atom")
+      val block = grid.getAtomBlock(create(61, 9))
+      Then("Getting 9 0 0 0 0 0 0 0 0")
+      assert(block.deep == lastBlock.deep)
+    }
+
+    scenario("Get last block 2") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get last block by last atom in block")
+      val block = grid.getAtomBlock(create(81, 0))
+      Then("Getting 9 0 0 0 0 0 0 0 0")
+      assert(block.deep == lastBlock.deep)
+    }
+
+    scenario("Get last block 3") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get last block by middle atom in block")
+      val block = grid.getAtomBlock(create(71, 0))
+      Then("Getting 9 0 0 0 0 0 0 0 0")
+      assert(block.deep == lastBlock.deep)
+    }
+
+    scenario("Get middle block 1") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get middle block by first block atom")
+      val block = grid.getAtomBlock(create(31, 1))
+      Then("Getting 1 0 0 0 5 0 0 0 2")
+      assert(block.deep == middleBlock.deep)
+    }
+
+    scenario("Get middle block 2") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get middle block by last atom in block")
+      val block = grid.getAtomBlock(create(41, 5))
+      Then("Getting 1 0 0 0 5 0 0 0 2")
+      assert(block.deep == middleBlock.deep)
+    }
+
+    scenario("Get middle block 3") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get middle block by middle atom in block")
+      val block = grid.getAtomBlock(create(51, 2))
+      Then("Getting 1 0 0 0 5 0 0 0 2")
+      assert(block.deep == middleBlock.deep)
+    }
+  }
 }
