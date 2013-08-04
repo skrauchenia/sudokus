@@ -51,6 +51,10 @@ class SudokuGrid(val atoms: Array[Atom]) {
     (for (i <- first - 1 until (last, sudokuGridWidth)) yield atoms.slice(i, i + sudokuGridBlockSize)).toArray
   }
 
+  def getAtomBlockAsSeq(atom: Atom): BlockSeq = {
+    for (blockRow <- getAtomBlock(atom); block <- blockRow) yield block
+  }
+
   def initBlocksIndexesMapping(): Map[Int, (Int, Int, Int)] = {
     val initial: Map[List[Int], (Int, Int, Int)] = Map(
       List(1, 2, 3, 10, 11, 12, 19, 20, 21) -> (0, 1, 21),
