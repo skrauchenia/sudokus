@@ -13,6 +13,11 @@ class SudokuGrid(val atoms: Array[Atom]) {
    */
   val blocksIndexesMapping: Map[Int, (Int, Int, Int)] = initBlocksIndexesMapping()
 
+  /**
+   * Creates grid from sequence of digits
+   * @param digitsSequence sequence of digits
+   * @return
+   */
   def this(digitsSequence: Array[Int]) = this {
     var index = 0
     for (digit <- digitsSequence) yield {
@@ -21,6 +26,11 @@ class SudokuGrid(val atoms: Array[Atom]) {
     }
   }
 
+  /**
+   * Creates grid from string contains digits separated by space
+   * @param digits e.g. "0 0 1 0 2"
+   * @return grid
+   */
   def this(digits: String) = this(for (digit <- digits.toArray; if digit != ' ') yield digit.toString.toInt)
 
   /**
@@ -100,6 +110,20 @@ class SudokuGrid(val atoms: Array[Atom]) {
    * @return atom
    */
   def getAtom(index: Int): Atom = atoms(index)
+
+  /**
+   * Creates new grid and replace one atom with updatedAtom
+   * @param newAtom new atom
+   * @return new grid
+   */
+  def replaceWithAtom(newAtom: Atom): SudokuGrid = {
+    new SudokuGrid(
+      for (atom <- this.atoms) yield {
+        if (atom.index == newAtom.index) newAtom
+        else atom
+      }
+    )
+  }
 
   override def toString: String = (for (atom <- atoms) yield {
     if (atom.index % sudokuGridWidth == 0) atom + "\n"

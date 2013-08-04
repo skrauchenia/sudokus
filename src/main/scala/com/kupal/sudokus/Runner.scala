@@ -12,9 +12,8 @@ object Runner {
     val config = ConfigFactory.load("data-sets")
     val patternValue = config.getString(args(0))
 
-    val resolver = new SudokuResolver(new SudokuGrid(patternValue))
-    val grid: SudokuGrid = resolver.resolve()
+    val resolvedGrid = SudokuResolver.resolve(new SudokuGrid(patternValue))
 
-    println(s"Result = \n${grid}")
+    println(s"Result = \n$resolvedGrid")
   }
 }
