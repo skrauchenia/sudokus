@@ -58,7 +58,7 @@ class SudokuGrid(val atoms: Array[Atom]) {
    * @return column
    */
   def getAtomColumn(atom: Atom): Column = {
-    val first = (atom.index - 1) / sudokuGridHeight
+    val first = (atom.index - 1) % sudokuGridHeight
     val last = first + (sudokuGridHeight * (sudokuGridWidth - 1))
 
     (for (i <- first until (last + 1 , sudokuGridWidth)) yield atoms(i)).toArray

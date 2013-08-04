@@ -62,7 +62,7 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
     }
   }
 
-  feature("Sudoku grid atom column") {
+  feature("Sudoku grid atom column 1") {
     scenario("Get first column") {
       Given("9x9 grid")
       val grid = new SudokuGrid(grid1)
@@ -76,7 +76,7 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       Given("9x9 grid")
       val grid = new SudokuGrid(grid1)
       When("Trying to get first column by fours atom")
-      val column = grid.getAtomColumn(createEmpty(4))
+      val column = grid.getAtomColumn(create(28, 2))
       Then("Getting 6 0 0 2 0 0 0 0 0")
       assert(column.deep == firstColumn.deep)
     }
@@ -85,16 +85,16 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       Given("9x9 grid")
       val grid = new SudokuGrid(grid1)
       When("Trying to get first column by last atom")
-      val column = grid.getAtomColumn(createEmpty(9))
+      val column = grid.getAtomColumn(createEmpty(73))
       Then("Getting 6 0 0 2 0 0 0 0 0")
       assert(column.deep == firstColumn.deep)
     }
 
-    scenario("Get last column") {
+    scenario("Get last column 1") {
       Given("9x9 grid")
       val grid = new SudokuGrid(grid1)
       When("Trying to get last column by first atom")
-      val column = grid.getAtomColumn(createEmpty(73))
+      val column = grid.getAtomColumn(createEmpty(9))
       Then("Getting 0 1 0 6 0 0 0 0 0")
       assert(column.deep == lastColumn.deep)
     }
@@ -103,7 +103,7 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       Given("9x9 grid")
       val grid = new SudokuGrid(grid1)
       When("Trying to get last column by fours atom")
-      val column = grid.getAtomColumn(create(76, 7))
+      val column = grid.getAtomColumn(create(36, 6))
       Then("Getting 0 1 0 6 0 0 0 0 0")
       assert(column.deep == lastColumn.deep)
     }
@@ -117,11 +117,29 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       assert(column.deep == lastColumn.deep)
     }
 
-    scenario("Get column from the middle") {
+    scenario("Get middle column 1") {
       Given("9x9 grid")
       val grid = new SudokuGrid(grid1)
       When("Trying to get third column by third atom")
-      val column = grid.getAtomColumn(create(21, 1))
+      val column = grid.getAtomColumn(create(3, 0))
+      Then("Getting 0 5 1 0 4 0 0 0 0")
+      assert(column.deep == thirdColumn.deep)
+    }
+
+    scenario("Get middle column 2") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get third column by fourth atom")
+      val column = grid.getAtomColumn(create(30, 0))
+      Then("Getting 0 5 1 0 4 0 0 0 0")
+      assert(column.deep == thirdColumn.deep)
+    }
+
+    scenario("Get middle column 3") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get third column by last atom")
+      val column = grid.getAtomColumn(create(75, 0))
       Then("Getting 0 5 1 0 4 0 0 0 0")
       assert(column.deep == thirdColumn.deep)
     }
