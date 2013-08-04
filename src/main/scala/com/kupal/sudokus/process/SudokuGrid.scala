@@ -7,10 +7,9 @@ import com.kupal.sudokus.process.model.Atom
  */
 class SudokuGrid(val atoms: Array[Atom]) {
 
-
   /**
    * contains atom index as key started from 1
-   * and as value (blockIndex, firstAtomIndex, LastAtomIndex)
+   * and as value (blockIndex, firstAtomNum, LastAtomNum)
    */
   val blocksIndexesMapping: Map[Int, (Int, Int, Int)] = initBlocksIndexesMapping()
 
@@ -30,6 +29,11 @@ class SudokuGrid(val atoms: Array[Atom]) {
    */
   def unresolvedSize = (for (atom <- atoms) yield if (atom.isResolved()) 0 else 1).sum
 
+  /**
+   * Retrieving row of specified atom
+   * @param atom atom
+   * @return row
+   */
   def getAtomRow(atom: Atom): Row = {
     val rowIndex = (atom.index - 1) / sudokuGridWidth
     val first = rowIndex * sudokuGridWidth
@@ -38,6 +42,11 @@ class SudokuGrid(val atoms: Array[Atom]) {
     atoms.slice(first, last)
   }
 
+  /**
+   * Retrieving column of specified atom
+   * @param atom atom
+   * @return column
+   */
   def getAtomColumn(atom: Atom): Column = {
     val first = (atom.index - 1) / sudokuGridHeight
     val last = first + (sudokuGridHeight * (sudokuGridWidth - 1))
@@ -45,16 +54,30 @@ class SudokuGrid(val atoms: Array[Atom]) {
     (for (i <- first until (last + 1 , sudokuGridWidth)) yield atoms(i)).toArray
   }
 
+  /**
+   * Retrieving block (sudokuGridBlockSize x sudokuGridBlockSize) of specified atom
+   * @param atom atom
+   * @return block
+   */
   def getAtomBlock(atom: Atom): Block = {
     val (_, first, last) = blocksIndexesMapping(atom.index)
 
     (for (i <- first - 1 until (last, sudokuGridWidth)) yield atoms.slice(i, i + sudokuGridBlockSize)).toArray
   }
 
+  /**
+   * Retrieving block (as sequence) of specified atom
+   * @param atom atom
+   * @return block
+   */
   def getAtomBlockAsSeq(atom: Atom): BlockSeq = {
     for (blockRow <- getAtomBlock(atom); block <- blockRow) yield block
   }
 
+  /**
+   * some metadata of atom's block
+   * @return (blockIndex, firstAtomNum, lastAtomNum)
+   */
   def initBlocksIndexesMapping(): Map[Int, (Int, Int, Int)] = {
     val initial: Map[List[Int], (Int, Int, Int)] = Map(
       List(1, 2, 3, 10, 11, 12, 19, 20, 21) -> (0, 1, 21),
@@ -70,6 +93,13 @@ class SudokuGrid(val atoms: Array[Atom]) {
 
     for((atoms, blockIndex) <- initial; atomIndex <- atoms) yield atomIndex -> blockIndex
   }
+
+  /**
+   * Retrieving atom by specified index
+   * @param index atom index
+   * @return atom
+   */
+  def getAtom(index: Int): Atom = atoms(index)
 
   override def toString: String = (for (atom <- atoms) yield {
     if (atom.index % sudokuGridWidth == 0) atom + "\n"

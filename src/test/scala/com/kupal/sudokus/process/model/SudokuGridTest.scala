@@ -274,4 +274,33 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
       assert(block.deep == middleBlock.deep)
     }
   }
+
+  feature("Sudoku grid indexed atom") {
+    scenario("Get first atom") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get first atom")
+      val atom = grid.getAtom(0)
+      Then("Getting first atom")
+      assert(atom == firstRow(0))
+    }
+
+    scenario("Get last atom") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get last atom")
+      val atom = grid.getAtom(80)
+      Then("Getting last atom")
+      assert(atom == lastRow(8))
+    }
+
+    scenario("Get atom somewhere from the middle") {
+      Given("9x9 grid")
+      val grid = new SudokuGrid(grid1)
+      When("Trying to get third atom from third row")
+      val atom = grid.getAtom(20)
+      Then("Getting first atom")
+      assert(atom == thirdRow(2))
+    }
+  }
 }
