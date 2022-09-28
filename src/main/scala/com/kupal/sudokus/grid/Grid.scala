@@ -2,6 +2,10 @@ package com.kupal.sudokus.grid
 
 case class Grid(cells: Seq[Cell]) {
 
+  val solvedCellsCount: Int = cells.count(_.solved)
+  val unresolvedCells: Int = 81 - solvedCellsCount
+  val solved: Boolean = solvedCellsCount == 81
+
   def cell(row: Int, col: Int): Cell = {
     cells(row * 9 + col)
   }
@@ -34,5 +38,23 @@ case class Grid(cells: Seq[Cell]) {
 
   def getBox(row: Int): Seq[Cell] = {
     house(row, 0)
+  }
+
+  override def toString: String = {
+    val sb = new StringBuilder
+    for (i <- 0 until 9) {
+      if (i % 3 == 0) {
+        sb.append(" --------------------\n")
+      }
+      for (j <- 0 until 9) {
+        if (j % 3 == 0) {
+          sb.append("|")
+        }
+        sb.append(cell(i, j).value.getOrElse(0)).append(" ")
+      }
+      sb.append("|\n")
+    }
+    sb.append(" --------------------\n")
+    sb.toString()
   }
 }

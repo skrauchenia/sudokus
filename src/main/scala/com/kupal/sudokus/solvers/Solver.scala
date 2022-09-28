@@ -1,9 +1,15 @@
 package com.kupal.sudokus.solvers
 
-import com.kupal.sudokus.grid.Grid
+import com.kupal.sudokus.grid.{Cell, Grid}
 
 trait Solver {
 
-  def solve(idx: Int, grid: Grid): Option[Int]
+  def name: String
+  def solve(cell: Cell, grid: Grid): Option[Int]
 
+}
+
+object Solver {
+
+  val All: Seq[Solver] = Seq(NakedSingle)
 }

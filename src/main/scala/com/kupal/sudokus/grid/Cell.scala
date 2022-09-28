@@ -14,7 +14,7 @@ case class Cell (idx: Int, value: Option[Int], options: Set[Int]) {
     rowBox * 3 + colBox
   }
 
-  def resolve(value: Int): Cell = copy(value = Some(value))
+  def solve(value: Int): Cell = Cell(idx, value)
 }
 
 object Cell {
