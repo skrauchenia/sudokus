@@ -1,7 +1,7 @@
 import sbt.Keys.libraryDependencies
 
 ThisBuild / scalaVersion     := "2.13.0"
-ThisBuild / version          := "0.9"
+ThisBuild / version          := "1.0"
 ThisBuild / organization     := "com.kupal"
 ThisBuild / organizationName := "kupal"
 
