@@ -56,7 +56,7 @@ class SudokuGridTest extends FeatureSpec with GivenWhenThen {
 
   def determineStructure(expectedStructure: Array[_], atom: Atom, structureDeterminer: (Atom) => Array[_]) = {
     val structure = structureDeterminer(atom)
-    assert(structure.deep == expectedStructure.deep)
+    assert(structure sameElements expectedStructure)
   }
 
   feature("Determine Sudoku grid column by atom") {

@@ -1,9 +1,14 @@
-name := "sudokus"
+import sbt.Keys.libraryDependencies
 
-version := "0.9"
+ThisBuild / scalaVersion     := "2.13.0"
+ThisBuild / version          := "0.9"
+ThisBuild / organization     := "com.kupal"
+ThisBuild / organizationName := "kupal"
 
-scalaVersion := "2.10.2"
+lazy val root = (project in file("."))
+  .settings(
+    name := "sudokus",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+    libraryDependencies += "com.typesafe" % "config" % "1.0.2"
+  )
 
-libraryDependencies += "com.typesafe" % "config" % "1.0.2"
-
-libraryDependencies += "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
